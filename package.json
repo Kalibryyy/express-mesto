@@ -1,0 +1,30 @@
+{
+  "name": "express-mesto",
+  "version": "1.0.0",
+  "description": "## Директории",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kalibryyy/express-mesto.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kalibryyy/express-mesto/issues"
+  },
+  "homepage": "https://github.com/Kalibryyy/express-mesto#readme",
+  "devDependencies": {
+    "eslint": "^7.13.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "nodemon": "^2.0.6"
+  },
+  "dependencies": {
+    "eslint-plugin-import": "^2.22.1",
+    "express": "^4.17.1"
+  }
+}
