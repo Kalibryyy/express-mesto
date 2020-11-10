@@ -1,5 +1,6 @@
+const path = require('path');
 const readFile = require('../utils/read-file');
-path = require('path');
+
 const pathToData = path.join(__dirname, '..', 'data', 'cards.json');
 
 module.exports.getCards = (req, res) => {
@@ -7,9 +8,9 @@ module.exports.getCards = (req, res) => {
   .then(data => {
     res.send(data);
   })
-  .catch(err => {
+  .catch(() => {
     res.status(404).send({
-      message: 'Нет такого файла'
+      message: 'Нет такого файла',
     });
   });
-}
+};
