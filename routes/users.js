@@ -1,19 +1,42 @@
 const router = require('express').Router();
+const readFile = require('../utils/read-file');
+path = require('path');
+const pathToData = path.join(__dirname, '..', 'data', 'users.json');
 
 router.get('/', (req, res) => {
-  res.send('Users route');
+  readFile(pathToData)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(404).send({
+        message: 'Нет такого файла'
+      });
+    });
 });
 
 router.get('/:id', (req, res) => {
-  const { id } = req.params; // { id: ... }
-  // if (!users[id]) {
-  //   res.status(404).send({
-  //     "message": "Нет пользователя с таким id"
-  //   });
+const { id } = req.params; 
 
-  //   return;
-  // }
-  res.send(`Users route with id: ${id}`);
+readFile(pathToData)
+  .then(data => {
+    const user = data.find(item => {
+      console.log(item);
+      return item._id === id;
+    })
+    if (!user) {
+      return res.status(404).send({
+        "message": "Нет пользователя с таким id"
+      });
+    }
+
+    res.send(user);
+  })
+  .catch(err => {
+    res.status(404).send({
+      message: 'Нет такого файла'
+    });
+  });
 });
 
 module.exports = router;
