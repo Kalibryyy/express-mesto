@@ -7,4 +7,4 @@ const routers = require('./routes/index.js');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routers);
 
-app.listen(PORT, _ => console.log(`App listening on port ${PORT}`));
+app.listen(PORT, _ => console.log(`App listening on port ${PORT}`)); // 
