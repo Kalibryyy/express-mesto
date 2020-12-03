@@ -11,7 +11,7 @@ module.exports.getUsers = (req, res) => {
       } else if (err.name === 'DisconnectedError') {
         res.status(503).send({ message: 'нет соединения с базой данных' });
       } else {
-        res.status(500).send({ message: 'Ошибка сервера', error: err });
+        res.status(500).send({ message: 'На сервере произошла ошибка', error: err });
       }
     });
 };
@@ -40,7 +40,7 @@ module.exports.getUser = (req, res) => {
       } else if (err.name === 'DisconnectedError') {
         res.status(503).send({ message: 'нет соединения с базой данных' });
       } else {
-        res.status(500).send({ message: 'Ошибка сервера', error: err });
+        res.status(500).send({ message: 'На сервере произошла ошибка', error: err });
       }
     });
 };
@@ -58,7 +58,7 @@ module.exports.createUser = (req, res) => {
       } else if (err.name === 'DisconnectedError') {
         res.status(503).send({ message: 'нет соединения с базой данных' });
       } else {
-        res.status(500).send({ message: 'Ошибка сервера', error: err });
+        res.status(500).send({ message: 'На сервере произошла ошибка', error: err });
       }
     });
 };

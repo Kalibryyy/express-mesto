@@ -11,7 +11,7 @@ module.exports.getCards = (req, res) => {
       } else if (err.name === 'DisconnectedError') {
         res.status(503).send({ message: 'нет соединения с базой данных' });
       } else {
-        res.status(500).send({ message: 'Ошибка сервера', error: err });
+        res.status(500).send({ message: 'На сервере произошла ошибка', error: err });
       }
     });
 };
@@ -29,7 +29,7 @@ module.exports.createCard = (req, res) => {
       } else if (err.name === 'DisconnectedError') {
         res.status(503).send({ message: 'нет соединения с базой данных' });
       } else {
-        res.status(500).send({ message: 'Ошибка сервера', error: err });
+        res.status(500).send({ message: 'На сервере произошла ошибка', error: err });
       }
     });
 };
@@ -58,7 +58,7 @@ module.exports.deleteCard = (req, res) => {
       } else if (err.name === 'DisconnectedError') {
         res.status(503).send({ message: 'нет соединения с базой данных' });
       } else {
-        res.status(500).send({ message: 'Ошибка сервера', error: err });
+        res.status(500).send({ message: 'На сервере произошла ошибка', error: err });
       }
     });
 };
