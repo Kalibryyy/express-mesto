@@ -52,5 +52,13 @@ module.exports.createUser = (req,res) => {
     .then((user) => {
       res.send({ data: user })
     })
-    .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
-}
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        res.status(400).send({ message: err.message });
+      } else if (err.name === 'DisconnectedError') {
+        res.status(503).send({ message: 'нет соединения с базой данных' });
+      } else {
+        res.status(500).send({ message: 'Ошибка сервера', error: err });
+      }
+    });
+};  

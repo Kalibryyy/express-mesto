@@ -5,10 +5,14 @@ module.exports.getCards = (req, res) => {
     .then((cards) => {
       res.send({data: cards});
     })
-    .catch(() => {
-      res.status(404).send({
-        message: 'Нет такого файла',
-      });
+    .catch((err) => {
+      if (err.name === 'DocumentNotFoundError') {
+        res.status(404).send({ message: 'карточка не найдена' });
+      } else if (err.name === 'DisconnectedError') {
+        res.status(503).send({ message: 'нет соединения с базой данных' });
+      } else {
+        res.status(500).send({ message: 'Ошибка сервера', error: err });
+      }
     });
 };
 
@@ -19,16 +23,43 @@ module.exports.createCard = (req, res) => {
   .then((card) => {
     res.send({ data: card })
   })
-  .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
+  .catch((err) => {
+    if (err.name === 'ValidationError') {
+      res.status(400).send({ message: err.message });
+    } else if (err.name === 'DisconnectedError') {
+      res.status(503).send({ message: 'нет соединения с базой данных' });
+    } else {
+      res.status(500).send({ message: 'Ошибка сервера', error: err });
+    }
+  });
 };
 
 module.exports.deleteCard = (req, res) => {
   const { cardId } = req.params;
 
   Card.findByIdAndRemove(cardId)
-  .then((card) => {
-    res.send({ data: card })
+  .orFail(() => {
+    const error404 = new Error('карточка не найдена')
+    error404.statusCode = 404
+    throw error404
   })
-  .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
+  .then((card) => {
+    res.send(card)
+  })
+  .catch((err) => {
+    if (err.statusCode === 404) {
+      res.status(404).send({ message: err.message }) 
+    } else if (err.name === 'ValidationError') {
+      res.status(400).send({ message: err.message });
+    } else if (err.name === 'DocumentNotFoundError') {
+      res.status(404).send({ message: err.message });
+    } else if (err.name === 'CastError') {
+      res.status(422).send({ message: 'в запросе переданы значения неправильного типа' });
+    } else if (err.name === 'DisconnectedError') {
+      res.status(503).send({ message: 'нет соединения с базой данных' });
+    } else {
+      res.status(500).send({ message: 'Ошибка сервера', error: err });
+    }
+  });
 };
 
