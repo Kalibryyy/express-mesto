@@ -24,6 +24,16 @@ const userSchema = new mongoose.Schema({
       },
       message: 'Здесь должна быть ссылка',
     },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+      minlength: 8,
+    },
   },
 });
 
